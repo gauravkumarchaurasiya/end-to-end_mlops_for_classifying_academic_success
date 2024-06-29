@@ -16,7 +16,7 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 current_file_path = Path(__file__).parent
-model_name = best_tuned_model1 + "_tuned.joblib"
+model_name = best_tuned_model1.lower() + "_tuned.joblib"
 model_path = current_file_path / "models" / "tuned_models" / model_name
 preprocessor_path = current_file_path / "models" / "transformers" / "preprocessor.joblib"
 output_transformer_path = current_file_path / "models" / "transformers" / "label_encoder.joblib"

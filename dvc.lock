@@ -85,8 +85,8 @@ stages:
       size: 1420
     - path: .\src\models\train_model.py
       hash: md5
-      md5: 3a08ddeda22f21c29b6fdcead03d5452
-      size: 4640
+      md5: d5fc0896bf60b5c9cff20b700f8b1d74
+      size: 5760
     params:
       params.yaml:
         train_model.adaboost.learning_rate: 1.0
@@ -107,8 +107,8 @@ stages:
     outs:
     - path: .\models\models
       hash: md5
-      md5: 7d3bf18b4055b0ef6b3a66350f670308.dir
-      size: 35059245
+      md5: 065fb52b9777d88f84d9a7bcbdb32a2d.dir
+      size: 34951789
       nfiles: 7
   hyperparameter_tuning:
     cmd: python src/models/hyperparameter_tuning.py
@@ -183,3 +183,14 @@ stages:
       md5: d05941a4afd9f8d705aaf4af4dd27375.dir
       size: 411104
       nfiles: 4
+  build_docker_image:
+    cmd: "docker build -t academic-success-predictor .\n"
+    deps:
+    - path: Dockerfile
+      hash: md5
+      md5: c0899d2f128f0b743260e5846bcc3885
+      size: 816
+    - path: requirements.txt
+      hash: md5
+      md5: 9e661b128486df286aa0bc43a1195c89
+      size: 89

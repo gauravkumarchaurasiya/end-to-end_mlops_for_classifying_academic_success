@@ -13,7 +13,7 @@ from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_sc
 from pathlib import Path
 from src.logger import logging
 from src.models.models_list import models
-from plot_metric import Y_model_accuracies,X_models_names
+from src.visualization.plot_metric import update_metrics, plot_metrics
 
 TARGET = 'Target'
 
@@ -74,6 +74,29 @@ def save_best_models(best_model1, best_model2, file_path):
                 file.write(f'best_model2 = "{best_model2}"\n')
             else:
                 file.write(line)
+                
+def update_metrics_file(model_names, accuracys):
+    """Update the plot_metic.py file with the given model name and accuracy."""
+    metrics_file_path = Path(__file__).parent.parent/"visualization" / 'plot_metic.py'
+    
+    with open(metrics_file_path, 'r') as file:
+        lines = file.readlines()
+    
+    # Find the lines where model_names and accuracies lists are defined and update them
+    for i, line in enumerate(lines):
+        if line.strip().startswith("X_model_names = ["):
+            # Add the new model name
+            lines.insert(i + 1, f"    '{model_names}',\n")
+        elif line.strip().startswith("Y_model_accuracies = ["):
+            # Add the new accuracy
+            lines.insert(i + 1, f"    {accuracys:.4f},\n")
+    
+    with open(metrics_file_path, 'w') as file:
+        file.writelines(lines)
+    
+    print(f"Metrics updated in {metrics_file_path}")
+    logging.info(f"Metrics updated in {metrics_file_path}")
+
 
 def main():
     current_path = Path(__file__)
@@ -101,9 +124,6 @@ def main():
 
         accuracy, f1, precision, recall = evaluate_model(model=trained_model, X_test=X_train, y_test=y_train)
         logging.info(f"{model_name} - Accuracy: {accuracy}, F1: {f1}, Precision: {precision}, Recall: {recall}")
-
-        X_models_names.append(model_name)
-        Y_model_accuracies.append(accuracy)
         
         model_names.append(model_name)
         accuracy_scores.append(accuracy)
@@ -116,6 +136,8 @@ def main():
         model_output_path_ = model_output_path / f'{model_name.lower()}.joblib'
         save_model(model=trained_model, save_path=model_output_path_)
 
+    update_metrics(model_names, accuracy_scores)
+    
     best_model1, best_model2 = update_best_models(model_names, f1_scores)
     logging.info(f"Best Model 1: {best_model1}")
     logging.info(f"Best Model 2: {best_model2}")

@@ -18,10 +18,10 @@ COPY src/models/models_list.py /app/src/models/
 COPY requirements.txt /app/
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements_docker.txt
 
 # Make port 8000 available to the world outside this container
-EXPOSE 8000
+EXPOSE 9000
 
 # Set the entry point to run the app
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
