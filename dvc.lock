@@ -1,0 +1,185 @@
+schema: '2.0'
+stages:
+  extract_data:
+    cmd: python .\src\data\extract_data.py playground-series-s4e6.zip
+    deps:
+    - path: .\data\raw\Zipped\playground-series-s4e6.zip
+      hash: md5
+      md5: fd8caf952776f3c1ae29abe49311762c
+      size: 3217279
+    - path: .\src\data\extract_data.py
+      hash: md5
+      md5: b4ab3ed2eed5878e33c9feb49f479f3b
+      size: 918
+    outs:
+    - path: .\data\raw\extracted
+      hash: md5
+      md5: d12cd4e8482700c7ca8331f3fcddbaff.dir
+      size: 16204746
+      nfiles: 3
+  make_dataset:
+    cmd: python .\src\data\make_dataset.py train.csv test.csv
+    deps:
+    - path: .\data\raw\extracted\test.csv
+      hash: md5
+      md5: 73ce23cb43f629cf564adb01da2113cb
+      size: 5925485
+    - path: .\data\raw\extracted\train.csv
+      hash: md5
+      md5: d9e20f0aef74f9830059aadaed58a154
+      size: 9486541
+    - path: .\src\data\make_dataset.py
+      hash: md5
+      md5: b1d6edb8fc543dc31ef7141cef643292
+      size: 3031
+    params:
+      params.yaml:
+        make_dataset.random_state: 9
+        make_dataset.test_size: 0.25
+    outs:
+    - path: .\data\interim
+      hash: md5
+      md5: f7ef2457d23652cc5829094ee004eaee.dir
+      size: 15540437
+      nfiles: 3
+  data_preprocessing:
+    cmd: python .\src\features\preprocessing.py train.csv val.csv test.csv
+    deps:
+    - path: .\data\interim\train.csv
+      hash: md5
+      md5: 841a5b8de690d8644835985eb2f390d3
+      size: 7174432
+    - path: .\data\interim\val.csv
+      hash: md5
+      md5: 40408dd723150493782a36fe1d978778
+      size: 2389507
+    - path: .\data\raw\extracted\test.csv
+      hash: md5
+      md5: 73ce23cb43f629cf564adb01da2113cb
+      size: 5925485
+    - path: .\src\features\preprocessing.py
+      hash: md5
+      md5: 10cb8f6a7e0cc8d87bb1b8fc3e0aa013
+      size: 4714
+    outs:
+    - path: .\data\processed
+      hash: md5
+      md5: 9c651feede69d252dcb841a64291d33a.dir
+      size: 64104535
+      nfiles: 3
+    - path: .\models\transformers
+      hash: md5
+      md5: 95ad94f30b7bf024d6b2f4d5c31b968e.dir
+      size: 7023
+      nfiles: 2
+  train_model:
+    cmd: python .\src\models\train_model.py train.csv
+    deps:
+    - path: .\data\processed\train.csv
+      hash: md5
+      md5: b0d119b445b0c0769eb89c7cfe411fee
+      size: 28892553
+    - path: .\src\models\models_list.py
+      hash: md5
+      md5: de45bd5fc24f3365d365f2fa720b76fb
+      size: 1420
+    - path: .\src\models\train_model.py
+      hash: md5
+      md5: 3a08ddeda22f21c29b6fdcead03d5452
+      size: 4640
+    params:
+      params.yaml:
+        train_model.adaboost.learning_rate: 1.0
+        train_model.adaboost.n_estimators: 50
+        train_model.decision_tree.max_depth: 5
+        train_model.gaussian_nb: {}
+        train_model.gradient_boosting.learning_rate: 0.1
+        train_model.gradient_boosting.max_depth: 3
+        train_model.gradient_boosting.n_estimators: 100
+        train_model.knn.n_neighbors: 5
+        train_model.knn.weights: uniform
+        train_model.logistic_regression.C: 1.0
+        train_model.logistic_regression.max_iter: 100
+        train_model.random_forest.max_depth: 10
+        train_model.random_forest.n_estimators: 100
+        train_model.svc.C: 1.0
+        train_model.svc.kernel: rbf
+    outs:
+    - path: .\models\models
+      hash: md5
+      md5: 7d3bf18b4055b0ef6b3a66350f670308.dir
+      size: 35059245
+      nfiles: 7
+  hyperparameter_tuning:
+    cmd: python src/models/hyperparameter_tuning.py
+    deps:
+    - path: data/processed/train.csv
+      hash: md5
+      md5: b0d119b445b0c0769eb89c7cfe411fee
+      size: 28892553
+    - path: data/processed/val.csv
+      hash: md5
+      md5: 7792283cf39abaeb171446e758daea10
+      size: 9631672
+    - path: src/models/hyperparameter_tuning.py
+      hash: md5
+      md5: 3818db341886b57cd4cdf88aad5a2219
+      size: 8015
+    outs:
+    - path: models/tuned_models
+      hash: md5
+      md5: 1b7d623b6068cd702a8886b2c8e3310f.dir
+      size: 403582319
+      nfiles: 2
+  predict_model:
+    cmd: python .\src\models\predict_model.py val.csv test.csv
+    deps:
+    - path: .\data\processed\test.csv
+      hash: md5
+      md5: a91f44354f78d2dd355469af7eaf402f
+      size: 25580310
+    - path: .\data\processed\val.csv
+      hash: md5
+      md5: 7792283cf39abaeb171446e758daea10
+      size: 9631672
+    - path: .\models\tuned_models
+      hash: md5
+      md5: 1b7d623b6068cd702a8886b2c8e3310f.dir
+      size: 403582319
+      nfiles: 2
+    - path: .\src\models\predict_model.py
+      hash: md5
+      md5: f9dc091b4ad8bd467016cc143e75fa75
+      size: 3649
+    outs:
+    - path: .\data\submission\submission.csv
+      hash: md5
+      md5: 164a7346f4e4cb40491d67fda4291751
+      size: 828353
+  results_plot:
+    cmd: python .\src\visualization\results_plot.py val.csv
+    deps:
+    - path: .\data\processed\val.csv
+      hash: md5
+      md5: 7792283cf39abaeb171446e758daea10
+      size: 9631672
+    - path: .\data\submission\submission.csv
+      hash: md5
+      md5: 164a7346f4e4cb40491d67fda4291751
+      size: 828353
+    - path: .\models\transformers
+      hash: md5
+      md5: 95ad94f30b7bf024d6b2f4d5c31b968e.dir
+      size: 7023
+      nfiles: 2
+    - path: .\models\tuned_models
+      hash: md5
+      md5: 1b7d623b6068cd702a8886b2c8e3310f.dir
+      size: 403582319
+      nfiles: 2
+    outs:
+    - path: .\src\visualization\reports
+      hash: md5
+      md5: d05941a4afd9f8d705aaf4af4dd27375.dir
+      size: 411104
+      nfiles: 4

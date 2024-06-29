@@ -1,0 +1,11 @@
+-e .
+pandas
+numpy
+scikit-learn
+mlflow
+dvc
+zipfile36
+pyyaml
+seaborn
+matplotlib
+fastapi
