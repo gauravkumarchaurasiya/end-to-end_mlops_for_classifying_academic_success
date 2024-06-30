@@ -3,12 +3,16 @@ End-to-End MLOps for Classifying Academic Success
 
 This project demonstrates the implementation of a robust MLOps pipeline to classify academic success using machine learning techniques. By leveraging an academic success dataset, we explore data preprocessing, model training, hyperparameter tuning, and deployment within a streamlined MLOps framework. The project showcases end-to-end automation, ensuring efficient model development, continuous integration, continuous deployment, and monitoring to maintain high model performance in predicting student success outcomes.
 
+Project Workflow : 
+[image link]
+
 Project Organization
 ------------
 
     ├── LICENSE
     ├── Makefile           <- Makefile with commands like `make data` or `make train`
     ├── README.md          <- The top-level README for developers using this project.
+    ├── app.py             <- Application script for deployment
     ├── data
     │   ├── external       <- Data from third party sources.
     │   ├── interim        <- Intermediate data that has been transformed.
@@ -17,11 +21,15 @@ Project Organization
     │
     ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
     │
+    ├── dvc.yaml           <- DVC pipeline file
+    │
     ├── models             <- Trained and serialized models, model predictions, or model summaries
     │
     ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
     │                         the creator's initials, and a short `-` delimited description, e.g.
     │                         `1.0-jqp-initial-data-exploration`.
+    │
+    ├── params.yaml        <- Parameters file for the project
     │
     ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
     │
@@ -31,7 +39,8 @@ Project Organization
     ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
     │                         generated with `pip freeze > requirements.txt`
     │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
+    ├── setup.py           <- Makes project pip installable (pip install -e .) so src can be imported
+    │
     ├── src                <- Source code for use in this project.
     │   ├── __init__.py    <- Makes src a Python module
     │   │
@@ -49,7 +58,17 @@ Project Organization
     │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
     │       └── visualize.py
     │
+    ├── static             <- Static files for the application
+    │
+    ├── .github
+    │   └── workflows      <- GitHub Actions workflows for CI/CD
+    │
+    ├── Dockerfile         <- Dockerfile for building the container image
+    │
+    ├── docker-compose.yml <- Docker Compose file for orchestrating multi-container Docker applications
+    │
     └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
 
-
---------
+Project Screenshots : 
+[image 1 link]
+[image 2 link]
