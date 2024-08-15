@@ -88,7 +88,7 @@ stages:
       docker build -t academic-success-predictor .
     deps:
       - Dockerfile
-      - requirements.txt
+      - requirements_docker.txt
 
   run_docker_container:
     cmd: |
