@@ -3,18 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-feather'%3E%3Cpath d='M3 5.5v1a2.5 2.5 0 0 0 2.5 2.5h0A2.5 2.5 0 0 0 8 6.5v-1'/%3E%3Cpath d='M20 12l-2-2M10 15l-3.5 3.5a2.12 2.12 0 0 0 0 3l4 4a2.12 2.12 0 0 0 3 0L20 18'/%3E%3Cpath d='M15.5 6.5l2-2'/%3E%3C/svg%3E" type="image/svg+xml">
     <title>Academic Success Prediction</title>
-    <!-- <link rel="stylesheet" href="/static/styles.css"> -->
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #dfdcdc;
+            background-color: #f4f4f4;
             color: #333;
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            transition: background-color 0.5s ease; 
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: #4c119f;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .navbar a {
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .navbar a:hover {
+            background-color: #4c51af;
         }
 
         .container {
@@ -23,7 +46,8 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             max-width: 600px;
-            width: 100%;
+            width: 90%;
+            margin: 20px 0;
         }
 
         h1 {
@@ -34,9 +58,10 @@
         label {
             display: block;
             margin: 10px 0 5px;
+            font-weight: bold;
         }
 
-        input[type="number"], input[type="submit"] {
+        input[type="number"], input[type="text"], input[type="submit"] {
             width: 100%;
             padding: 10px;
             margin-bottom: 10px;
@@ -58,155 +83,320 @@
 
         .result {
             margin-top: 20px;
-            font-size: 18px;
+            font-size: 21px;
             color: #333;
+            background-color: #38ff2f;
+            text-align: center;
+            padding: 3px 6px;
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .section-title {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: #4c119f;
+        }
+
+        .footer {
+        width: 100%;
+        padding: 2px 0;
+        background-color: #4c119f;
+        color: white;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        font-size: 14px;
+    }
+
+    .footer a {
+        color: #ffffe0;
+        text-decoration: none;
+        margin: 0 10px;
+    }
+
+    .footer a:hover {
+        text-decoration: underline;
+    }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 0;
+            }
+
+            .navbar a {
+                padding: 10px;
+                width: 100%;
+            }
+
+            .container, .about-section {
+                width: 95%;
+                margin: 10px 0;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            .section-title {
+                font-size: 18px;
+            }
+
+            .about-section h2 {
+                font-size: 22px;
+            }
+
+            .about-section p {
+                font-size: 14px;
+            }
+        
+        .footer {
+            font-size: 12px;
+            padding: 3px 2px;
+        }
+    }
+
+        @media (max-width: 480px) {
+            .container, .about-section {
+                width: 100%;
+                margin: 10px 0;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .section-title {
+                font-size: 16px;
+            }
+            .footer {
+            font-size: 10px;
+            padding: 4px 1px;
+        }
+
         }
     </style>
 </head>
 <body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <a href="https://github.com/gauravkumarchaurasiya/end-to-end_mlops_for_classifying_academic_success" target="_blank">
+            <i class="fab fa-github"></i> Fork the Repo.
+        </a>
+        <a href="https://www.geeksforgeeks.org/end-to-end-mlops-pipeline-a-comprehensive-project/" target="_blank">
+            <i class="fas fa-info-circle"></i> About Project
+        </a>
+        <a href="https://gauravkumarchaurasiya.github.io/" target="_blank">
+            <i class="fas fa-user"></i> My Portfolio
+        </a>
+    </div>
+    
+
     <div class="container">
         <h1>Academic Success Prediction</h1>
         <form action="/predictions" method="post">
-            <label for="Marital status">Marital status:</label>
-            <input type="number" id="Marital status" name="Marital status" required>
+            <!-- Personal Information Section -->
+            <div class="section-title">Personal Information</div>
 
-            <label for="Application mode">Application mode:</label>
-            <input type="number" id="Application mode" name="Application mode" required>
-
-            <label for="Application order">Application order:</label>
-            <input type="number" id="Application order" name="Application order" required>
-
-            <label for="Course">Course:</label>
-            <input type="number" id="Course" name="Course" required>
-
-            <label for="Daytime/evening attendance">Daytime/evening attendance:</label>
-            <input type="number" id="Daytime/evening attendance" name="Daytime/evening attendance" required>
-
-            <label for="Previous qualification">Previous qualification:</label>
-            <input type="number" id="Previous qualification" name="Previous qualification" required>
-
-            <label for="Previous qualification (grade)">Previous qualification (grade):</label>
-            <input type="number" step="0.1" id="Previous qualification (grade)" name="Previous qualification (grade)" required>
-
-            <label for="Nacionality">Nacionality:</label>
-            <input type="number" id="Nacionality" name="Nacionality" required>
-
-            <label for="Mother's qualification">Mother's qualification:</label>
-            <input type="number" id="Mother's qualification" name="Mother's qualification" required>
-
-            <label for="Father's qualification">Father's qualification:</label>
-            <input type="number" id="Father's qualification" name="Father's qualification" required>
-
-            <label for="Mother's occupation">Mother's occupation:</label>
-            <input type="number" id="Mother's occupation" name="Mother's occupation" required>
-
-            <label for="Father's occupation">Father's occupation:</label>
-            <input type="number" id="Father's occupation" name="Father's occupation" required>
-
-            <label for="Admission grade">Admission grade:</label>
-            <input type="number" step="0.1" id="Admission grade" name="Admission grade" required>
-
-            <label for="Displaced">Displaced:</label>
-            <input type="number" id="Displaced" name="Displaced" required>
-
-            <label for="Educational special needs">Educational special needs:</label>
-            <input type="number" id="Educational special needs" name="Educational special needs" required>
-
-            <label for="Debtor">Debtor:</label>
-            <input type="number" id="Debtor" name="Debtor" required>
-
-            <label for="Tuition fees up to date">Tuition fees up to date:</label>
-            <input type="number" id="Tuition fees up to date" name="Tuition fees up to date" required>
+            <label for="Marital status">Marital Status:</label>
+            <input type="number" id="Marital status" name="Marital status" required placeholder="1 for Single, 2 for Married, etc.">
+            <span class="help-text">1 - Single, 2 - Married, 3 - Widower, 4 - Divorced, 5 - Facto Union, 6 - Legally Separated.</span>
 
             <label for="Gender">Gender:</label>
-            <input type="number" id="Gender" name="Gender" required>
+            <input type="number" id="Gender" name="Gender" required placeholder="1 for Male, 0 for Female">
+            <span class="help-text">1 - Male, 0 - Female.</span>
 
-            <label for="Scholarship holder">Scholarship holder:</label>
-            <input type="number" id="Scholarship holder" name="Scholarship holder" required>
+            <label for="Age at enrollment">Age at Enrollment:</label>
+            <input type="number" id="Age at enrollment" name="Age at enrollment" required placeholder="Age at enrollment">
 
-            <label for="Age at enrollment">Age at enrollment:</label>
-            <input type="number" id="Age at enrollment" name="Age at enrollment" required>
+            <!-- Academic Information Section -->
+            <div class="section-title">Academic Information</div>
+
+            <label for="Application mode">Application Mode:</label>
+            <input type="number" id="Application mode" name="Application mode" required placeholder="Mode code">
+            <span class="help-text">1 - 1st phase - general contingent, 2 - Ordinance No. 612/93, etc.</span>
+
+            <label for="Application order">Application Order:</label>
+            <input type="number" id="Application order" name="Application order" required placeholder="Application order between 0 (first choice) to 9 (last choice)">
+
+            <label for="Course">Course:</label>
+            <input type="number" id="Course" name="Course" required placeholder="Course code">
+            <span class="help-text">E.g., 33 - Biofuel Production Technologies, 171 - Animation and Multimedia Design, etc.</span>
+
+            <label for="Daytime/evening attendance">Daytime/Evening Attendance:</label>
+            <input type="number" id="Daytime/evening attendance" name="Daytime/evening attendance" required placeholder="1 for Daytime, 0 for Evening">
+
+            <label for="Previous qualification">Previous Qualification:</label>
+            <input type="number" id="Previous qualification" name="Previous qualification" required placeholder="Previous qualification code">
+            <span class="help-text">E.g., 1 - Secondary education, 2 - Higher education - bachelor's degree, etc.</span>
+
+            <label for="Previous qualification (grade)">Previous Qualification Grade:</label>
+            <input type="number" step="0.1" id="Previous qualification (grade)" name="Previous qualification (grade)" required placeholder="Grade between 0 and 200">
+
+            <label for="Admission grade">Admission Grade:</label>
+            <input type="number" step="0.1" id="Admission grade" name="Admission grade" required placeholder="Grade between 0 and 200">
+
+            <label for="Nacionality">Nationality:</label>
+            <input type="number" id="Nacionality" name="Nacionality" required placeholder="Nationality code">
+            <span class="help-text">1 - Portuguese, 2 - German, 6 - Spanish, etc.</span>
+
+            <label for="Mother's qualification">Mother's Qualification:</label>
+            <input type="number" id="Mother's qualification" name="Mother's qualification" required placeholder="Qualification code">
+            <span class="help-text">E.g., 1 - Secondary Education - 12th Year of Schooling or Eq., 2 - Higher Education - Bachelor's Degree, etc.</span>
+
+            <label for="Father's qualification">Father's Qualification:</label>
+            <input type="number" id="Father's qualification" name="Father's qualification" required placeholder="Qualification code">
+            <span class="help-text">E.g., 1 - Secondary Education - 12th Year of Schooling or Eq., 2 - Higher Education - Bachelor's Degree, etc.</span>
+
+            <label for="Mother's occupation">Mother's Occupation:</label>
+            <input type="number" id="Mother's occupation" name="Mother's occupation" required placeholder="Occupation code">
+            <span class="help-text">E.g., 1 - Representatives of the Legislative Power, 2 - Specialists in Intellectual and Scientific Activities, etc.</span>
+
+            <label for="Father's occupation">Father's Occupation:</label>
+            <input type="number" id="Father's occupation" name="Father's occupation" required placeholder="Occupation code">
+            <span class="help-text">E.g., 1 - Representatives of the Legislative Power, 2 - Specialists in Intellectual and Scientific Activities, etc.</span>
+
+            <!-- Financial and Social Section -->
+            <div class="section-title">Financial and Social Information</div>
+
+            <label for="Displaced">Displaced:</label>
+            <input type="number" id="Displaced" name="Displaced" required placeholder="1 for Yes, 0 for No">
+
+            <label for="Educational special needs">Educational Special Needs:</label>
+            <input type="number" id="Educational special needs" name="Educational special needs" required placeholder="1 for Yes, 0 for No">
+
+            <label for="Debtor">Debtor:</label>
+            <input type="number" id="Debtor" name="Debtor" required placeholder="1 for Yes, 0 for No">
+
+            <label for="Tuition fees up to date">Tuition Fees Up to Date:</label>
+            <input type="number" id="Tuition fees up to date" name="Tuition fees up to date" required placeholder="1 for Yes, 0 for No">
+
+            <label for="Scholarship holder">Scholarship Holder:</label>
+            <input type="number" id="Scholarship holder" name="Scholarship holder" required placeholder="1 for Yes, 0 for No">
 
             <label for="International">International:</label>
-            <input type="number" id="International" name="International" required>
+            <input type="number" id="International" name="International" required placeholder="1 for Yes, 0 for No">
 
-            <label for="Curricular units 1st sem (credited)">Curricular units 1st sem (credited):</label>
-            <input type="number" id="Curricular units 1st sem (credited)" name="Curricular units 1st sem (credited)" required>
+            <!-- Curricular Units Information -->
+            <div class="section-title">Curricular Units Information</div>
 
-            <label for="Curricular units 1st sem (enrolled)">Curricular units 1st sem (enrolled):</label>
-            <input type="number" id="Curricular units 1st sem (enrolled)" name="Curricular units 1st sem (enrolled)" required>
+            <label for="Curricular units 1st sem (credited)">Curricular Units 1st Sem (Credited):</label>
+            <input type="number" id="Curricular units 1st sem (credited)" name="Curricular units 1st sem (credited)" required placeholder="Number of credited units">
 
-            <label for="Curricular units 1st sem (evaluations)">Curricular units 1st sem (evaluations):</label>
-            <input type="number" id="Curricular units 1st sem (evaluations)" name="Curricular units 1st sem (evaluations)" required>
+            <label for="Curricular units 1st sem (enrolled)">Curricular Units 1st Sem (Enrolled):</label>
+            <input type="number" id="Curricular units 1st sem (enrolled)" name="Curricular units 1st sem (enrolled)" required placeholder="Number of enrolled units">
 
-            <label for="Curricular units 1st sem (approved)">Curricular units 1st sem (approved):</label>
-            <input type="number" id="Curricular units 1st sem (approved)" name="Curricular units 1st sem (approved)" required>
+            <label for="Curricular units 1st sem (evaluations)">Curricular Units 1st Sem (Evaluations):</label>
+            <input type="number" id="Curricular units 1st sem (evaluations)" name="Curricular units 1st sem (evaluations)" required placeholder="Number of evaluations">
 
-            <label for="Curricular units 1st sem (grade)">Curricular units 1st sem (grade):</label>
-            <input type="number" step="0.1" id="Curricular units 1st sem (grade)" name="Curricular units 1st sem (grade)" required>
+            <label for="Curricular units 1st sem (approved)">Curricular Units 1st Sem (Approved):</label>
+            <input type="number" id="Curricular units 1st sem (approved)" name="Curricular units 1st sem (approved)" required placeholder="Number of approved units">
 
-            <label for="Curricular units 1st sem (without evaluations)">Curricular units 1st sem (without evaluations):</label>
-            <input type="number" id="Curricular units 1st sem (without evaluations)" name="Curricular units 1st sem (without evaluations)" required>
+            <label for="Curricular units 1st sem (grade)">Curricular Units 1st Sem (Grade):</label>
+            <input type="number" step="0.1" id="Curricular units 1st sem (grade)" name="Curricular units 1st sem (grade)" required placeholder="Grade average (0-20)">
 
-            <label for="Curricular units 2nd sem (credited)">Curricular units 2nd sem (credited):</label>
-            <input type="number" id="Curricular units 2nd sem (credited)" name="Curricular units 2nd sem (credited)" required>
+            <label for="Curricular units 1st sem (without evaluations)">Curricular Units 1st Sem (Without Evaluations):</label>
+            <input type="number" id="Curricular units 1st sem (without evaluations)" name="Curricular units 1st sem (without evaluations)" required placeholder="Number of units without evaluations">
 
-            <label for="Curricular units 2nd sem (enrolled)">Curricular units 2nd sem (enrolled):</label>
-            <input type="number" id="Curricular units 2nd sem (enrolled)" name="Curricular units 2nd sem (enrolled)" required>
+            <label for="Curricular units 2nd sem (credited)">Curricular Units 2nd Sem (Credited):</label>
+            <input type="number" id="Curricular units 2nd sem (credited)" name="Curricular units 2nd sem (credited)" required placeholder="Number of credited units">
 
-            <label for="Curricular units 2nd sem (evaluations)">Curricular units 2nd sem (evaluations):</label>
-            <input type="number" id="Curricular units 2nd sem (evaluations)" name="Curricular units 2nd sem (evaluations)" required>
+            <label for="Curricular units 2nd sem (enrolled)">Curricular Units 2nd Sem (Enrolled):</label>
+            <input type="number" id="Curricular units 2nd sem (enrolled)" name="Curricular units 2nd sem (enrolled)" required placeholder="Number of enrolled units">
 
-            <label for="Curricular units 2nd sem (approved)">Curricular units 2nd sem (approved):</label>
-            <input type="number" id="Curricular units 2nd sem (approved)" name="Curricular units 2nd sem (approved)" required>
+            <label for="Curricular units 2nd sem (evaluations)">Curricular Units 2nd Sem (Evaluations):</label>
+            <input type="number" id="Curricular units 2nd sem (evaluations)" name="Curricular units 2nd sem (evaluations)" required placeholder="Number of evaluations">
 
-            <label for="Curricular units 2nd sem (grade)">Curricular units 2nd sem (grade):</label>
-            <input type="number" step="0.1" id="Curricular units 2nd sem (grade)" name="Curricular units 2nd sem (grade)" required>
+            <label for="Curricular units 2nd sem (approved)">Curricular Units 2nd Sem (Approved):</label>
+            <input type="number" id="Curricular units 2nd sem (approved)" name="Curricular units 2nd sem (approved)" required placeholder="Number of approved units">
 
-            <label for="Curricular units 2nd sem (without evaluations)">Curricular units 2nd sem (without evaluations):</label>
-            <input type="number" id="Curricular units 2nd sem (without evaluations)" name="Curricular units 2nd sem (without evaluations)" required>
+            <label for="Curricular units 2nd sem (grade)">Curricular Units 2nd Sem (Grade):</label>
+            <input type="number" step="0.1" id="Curricular units 2nd sem (grade)" name="Curricular units 2nd sem (grade)" required placeholder="Grade average (0-20)">
 
-            <label for="Unemployment rate">Unemployment rate:</label>
-            <input type="number" step="0.01" id="Unemployment rate" name="Unemployment rate" required>
+            <label for="Curricular units 2nd sem (without evaluations)">Curricular Units 2nd Sem (Without Evaluations):</label>
+            <input type="number" id="Curricular units 2nd sem (without evaluations)" name="Curricular units 2nd sem (without evaluations)" required placeholder="Number of units without evaluations">
 
-            <label for="Inflation rate">Inflation rate:</label>
-            <input type="number" step="0.01" id="Inflation rate" name="Inflation rate" required>
+            <!-- Economic Indicators Section -->
+            <div class="section-title">Economic Indicators</div>
+
+            <label for="Unemployment rate">Unemployment Rate:</label>
+            <input type="number" step="0.01" id="Unemployment rate" name="Unemployment rate" required placeholder="Unemployment rate (%)">
+
+            <label for="Inflation rate">Inflation Rate:</label>
+            <input type="number" step="0.01" id="Inflation rate" name="Inflation rate" required placeholder="Inflation rate (%)">
 
             <label for="GDP">GDP:</label>
-            <input type="number" step="0.01" id="GDP" name="GDP" required>
+            <input type="number" step="0.01" id="GDP" name="GDP" required placeholder="GDP">
 
             <input type="submit" value="Submit">
         </form>
         <div class="result" id="result"></div>
     </div>
+    <div class="footer">
+        Thank you for visiting! &nbsp; | &nbsp; 
+        <a href="https://github.com/gauravkumarchaurasiya" target="_blank">GitHub</a> &nbsp; | &nbsp; 
+        <a href="https://www.linkedin.com/in/gauravkumarchaurasiya" target="_blank">Linkedin</a>
+    </div>
+
 
     <script>
-        // JavaScript to handle form submission and display result
-        document.querySelector('form').addEventListener('submit', async (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const data = {};
-            formData.forEach((value, key) => { data[key] = value; });
+       document.querySelector('form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = {};
+    formData.forEach((value, key) => { data[key] = value; });
 
-            try {
-                const response = await fetch('/predictions', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-
-                const result = await response.json();
-                document.getElementById('result').innerText = `Predicted Academic Success Score: ${result.predicted_academic_success_score}`;
-            } catch (error) {
-                document.getElementById('result').innerText = `Error: ${error.message}`;
-            }
+    try {
+        const response = await fetch('/predictions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
         });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        const predictedValue = result.predicted_academic_success_score;
+        let resultText = '';
+        let backgroundColor = '';
+
+        if (predictedValue === 0) {
+            resultText = 'Dropout';
+            backgroundColor = '#FFE2E2'; // Light Red
+        } else if (predictedValue === 1) {
+            resultText = 'Enrolled';
+            backgroundColor = '#ffffe0'; // Very Light Greenish Yellow
+        } else if (predictedValue === 2) {
+            resultText = 'Graduate';
+            backgroundColor = '#ccffcc'; // Light Green
+        }
+
+        document.getElementById('result').innerText = `Predicted Outcome: ${resultText}`;
+        document.body.style.backgroundColor = backgroundColor;
+
+        // Revert background color after 5 seconds
+        setTimeout(() => {
+            document.body.style.backgroundColor = '#f4f4f4'; // Original background color
+        }, 10000);
+
+    } catch (error) {
+        document.getElementById('result').innerText = `Error: ${error.message}`;
+    }
+});
+
     </script>
 </body>
 </html>
