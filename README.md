@@ -3,8 +3,9 @@ End-to-End MLOps for Classifying Academic Success
 
 This project demonstrates the implementation of a robust MLOps pipeline to classify academic success using machine learning techniques. By leveraging an academic success dataset, we explore data preprocessing, model training, hyperparameter tuning, and deployment within a streamlined MLOps framework. The project showcases end-to-end automation, ensuring efficient model development, continuous integration, continuous deployment, and monitoring to maintain high model performance in predicting student success outcomes.
 
-Project Workflow : 
-[image link]
+## Project Workflow : 
+![image](https://github.com/gauravkumarchaurasiya/end-to-end_mlops_for_classifying_academic_success/blob/main/images/project%20workflow.png)
+
 
 Project Organization
 ------------
@@ -69,6 +70,11 @@ Project Organization
     │
     └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
 
-Project Screenshots : 
-[image 1 link]
-[image 2 link]
+## Project Screenshots : 
+Docker Image running :   
+
+![image](https://github.com/gauravkumarchaurasiya/end-to-end_mlops_for_classifying_academic_success/blob/main/images/docker%20run%20image.png)
+
+
+## Prediction :   
+![image](https://github.com/gauravkumarchaurasiya/end-to-end_mlops_for_classifying_academic_success/blob/main/images/output.png)
