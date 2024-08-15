@@ -3,6 +3,11 @@ End-to-End MLOps for Classifying Academic Success
 
 This project demonstrates the implementation of a robust MLOps pipeline to classify academic success using machine learning techniques. By leveraging an academic success dataset, we explore data preprocessing, model training, hyperparameter tuning, and deployment within a streamlined MLOps framework. The project showcases end-to-end automation, ensuring efficient model development, continuous integration, continuous deployment, and monitoring to maintain high model performance in predicting student success outcomes.
 
+  
+### [Project Blog](https://www.geeksforgeeks.org/end-to-end-mlops-pipeline-a-comprehensive-project/)
+
+
+    
 ## Project Workflow : 
 ![image](https://github.com/gauravkumarchaurasiya/end-to-end_mlops_for_classifying_academic_success/blob/main/images/project%20workflow.png)
 
