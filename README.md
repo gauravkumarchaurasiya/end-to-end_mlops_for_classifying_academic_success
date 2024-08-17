@@ -5,6 +5,7 @@ This project demonstrates the implementation of a robust MLOps pipeline to class
 
   
 ### [Project Blog](https://www.geeksforgeeks.org/end-to-end-mlops-pipeline-a-comprehensive-project/)
+### [Deployed Model](https://academic-success-predictor.onrender.com/)
 
 
     
